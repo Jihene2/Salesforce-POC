@@ -105,9 +105,46 @@ public class CreateAccountSteps {
 
 	@Then("the opportunity should be created with the correct informations")
 	public void the_opportunity_should_be_created_with_the_correct_informations() {
+		CreateAccountPage.VerifyOpportunityCreation(Browserhelper.driver);
+	}
+	
+	
+	
+	/************************************Scenario 4 : create opportunity - account portal *****************************/
+	
+	/*****************************************Step 1 : Navigate to account  *******************************************/	
+	
+	@Given("user enter his account")
+	
+	public void user_enter_his_account() throws Throwable {
+		Browserhelper.driver=Browserhelper.initializeDriver(Browserhelper.driver);
+		CreateAccountPage.authenticateInWebPortal(Browserhelper.driver);
+		CreateAccountPage.navigateToSales(Browserhelper.driver);
+		CreateAccountPage.NavigateToAccount(Browserhelper.driver);
+	}
+	
+	
+	/*****************************************Step 2 : Create Request  *******************************************/
+
+	@When("user create new request with : statut {string} , request origin {string} and click submit")
+	public void user_create_new_request_with_statut_request_origin_and_click_submit(String string, String string2) throws Exception {
+		CreateAccountPage.RequestCreation(Browserhelper.driver, string, string2);
+	}
+	
+	/***************************************Step 3 : Verify request creation  *******************************************/
+	
+	@Then("the request sould be created with the correct informations")
+	public void the_request_sould_be_created_with_the_correct_informations(io.cucumber.datatable.DataTable dataTable) {
 	    // Write code here that turns the phrase above into concrete actions
+	    // For automatic transformation, change DataTable to one of
+	    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+	    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+	    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+	    //
+	    // For other transformations you can register a DataTableType.
 	    throw new io.cucumber.java.PendingException();
 	}
+
 	
 
 

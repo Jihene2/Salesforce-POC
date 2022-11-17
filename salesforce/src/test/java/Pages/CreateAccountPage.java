@@ -22,7 +22,7 @@ public class CreateAccountPage {
 	
 	public static WebDriver driver;
 	
-	public static String expected_name, expected_phone, expected_first_name, expected_last_name;
+	public static String expected_name, expected_phone, expected_first_name, expected_last_name, expactedstep;
 	
 	/********************authenticate in Web Portal**************/
 	public static void authenticateInWebPortal(WebDriver driver) throws Exception {
@@ -124,14 +124,56 @@ public class CreateAccountPage {
 		//assertEquals(expected_first_name + expected_last_name , driver.findElement(By.xpath("//*[@id='window']")).getText());
 	}
 	
+	
+	
 	/********************* account creation **********************/
+	
 	public static void AccountCreation ( WebDriver driver, String opportunity_name, String closure_date, String step ) throws Exception {
+		
+		expactedstep=step;
 		// select new opportunity
 		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Opportunités'])[2]/following::div[6]")).click();
 		Thread.sleep(2000);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Opportunités'])[2]/following::div[6]")));
-
+		
+		//insert opportunity_name
+		driver.findElement(By.xpath("//input[@class='slds-input'][@name='Name']")).sendKeys(opportunity_name);
+		
+		//insert closure date 
+		driver.findElement(By.xpath("//input[@class='slds-input'][@name='CloseDate']")).sendKeys(closure_date);
+		
+		//insert step 
+		WebElement etape =driver.findElement(By.xpath("//button[@class='slds-combobox__input slds-input_faux slds-combobox__input-value'][@aria-label='Étape, - Aucun -']"));
+		etape.sendKeys(step);
+		etape.sendKeys(Keys.ENTER);
+		
+		//click submit 
+		driver.findElement(By.xpath("//button[@name='SaveEdit']")).click();
+		
+	
 	}
+	/********************* verify opportunity creation **********************/
+	
+	public static void VerifyOpportunityCreation(WebDriver driver) {
+		
+		WebElement expected_result =driver.findElement(By.xpath("//div[@class='slds-tile__detail']//lst-formatted-text[contains(text(),'Prospecting')]"));
+	    String txt = expected_result.getText();   
+	    assertEquals(expactedstep, txt);	
+		driver.close();	
+	}
+	
+	/************************ Request creation ***************************/
+	
+	public static void RequestCreation(WebDriver driver, String statut, String request_origin) throws Exception {
+		
+	// click on new request 
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Requêtes'])[2]/following::div[6]")).click();
+		Thread.sleep(2000);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Requêtes'])[2]/following::div[6]")));
+		
+	//	
+	}
+	
 	
 	
 }

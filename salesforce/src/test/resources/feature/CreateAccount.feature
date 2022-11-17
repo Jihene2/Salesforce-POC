@@ -29,4 +29,13 @@ Feature: SalesForce - Account in Sales Portal
 
     Examples: 
       | opportunity_name | closure_date | step        |
-      | opportunity test | 16/11/2022   | Procpecting |
+      | opportunity test | 16/11/2022   | Prospecting |
+
+  @scenario4
+  Scenario Outline: Request Creation - in account portal
+    Given user enter his account
+    When user create new request with : statut "<statut>" , request origin "<request_origin>" and click submit
+    Then the request sould be created with the correct informations
+    
+      | statut | request_origin |
+      | New    | Email          |
